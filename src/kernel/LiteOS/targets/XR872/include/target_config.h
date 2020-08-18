@@ -55,13 +55,15 @@ extern uint32_t SystemCoreClock;
  * @ingroup los_config
  * Configuration item for hardware interrupt tailoring
  */
-#define LOSCFG_PLATFORM_HWI                                 NO
+#define LOSCFG_PLATFORM_HWI                                 YES
 
 /**
  * @ingroup los_config
  * Maximum number of used hardware interrupts, including Tick timer interrupts.
  */
-#define LOSCFG_PLATFORM_HWI_LIMIT                           96
+#define LOSCFG_PLATFORM_HWI_LIMIT                           48
+
+#define OS_HWI_WITH_ARG                                     NO
 
 
 /*=============================================================================

@@ -48,6 +48,18 @@ void hardware_init_hook(void)
 	SystemInit();
 }
 
+#ifdef __CONFIG_OS_LITEOS
+void SysTickHandler(void)
+{
+    extern void osTickHandler(void);
+    extern void LOS_IntLock(void);
+    extern void LOS_IntUnLock(void);
+    LOS_IntLock();
+    osTickHandler();
+    LOS_IntUnLock();
+}
+#endif
+
 int __wrap_main(void)
 {
 	static const GPIO_GlobalInitParam gpio_param = {

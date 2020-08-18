@@ -230,7 +230,7 @@ __attribute__((naked)) VOID osTaskSchedule(VOID)
 *        Second: Restore the context of the next running task(g_stLosTask.pstNewTask)
 *                from its own stack.
 ****************************************************************************************/
-__attribute__((naked)) VOID PendSV_Handler(VOID)
+__attribute__((naked)) VOID osPendSV(VOID)
 {
     asm (
     ".syntax unified\n\t"

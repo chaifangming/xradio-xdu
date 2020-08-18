@@ -710,6 +710,7 @@ _scanf_float = 0x21835;
 _scanf_i = 0x259c9;
 __sccl = 0x25bad;
 SDC1_IRQHandler = 0x10e69;
+SDC0_IRQHandler = 0x10e6f;
 sdio_align_size = 0x14755;
 _sdio_claim_host = 0x14759;
 sdio_disable_func = 0x140d5;

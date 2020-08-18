@@ -31,13 +31,43 @@
 #include <stdio.h>
 #include "kernel/os/os.h"
 
+#include "los_hwi.h"
+
+extern void OsInterrupt(void);
+extern void (*g_pstHwiForm[])(void);
+extern void (*m_pstHwiSlaveForm[])(void);
+extern void OsInterrupt(void);
+
+static void hack_vtor(int vec, void (*handler)(void))
+{
+    g_pstHwiForm[16+vec] = OsInterrupt;
+    m_pstHwiSlaveForm[16+vec] = handler;
+}
+
+static void fixup_vtor(void)
+{
+    extern void DMA_IRQHandler(void);
+    extern void SDC0_IRQHandler(void);
+    extern void UART0_IRQHandler(void);
+    extern void Wakeup_Source_Handler(void);
+    extern void xradio_irq_handler(void);
+
+    hack_vtor(0,  DMA_IRQHandler);
+    hack_vtor(2,  SDC0_IRQHandler);
+    hack_vtor(4,  UART0_IRQHandler);
+    hack_vtor(25, Wakeup_Source_Handler);
+    hack_vtor(29, xradio_irq_handler);
+}
+
 int main(void)
 {
-	platform_init();
+    platform_init();
 
-	while (1) {
-		OS_Sleep(10);
-		printf("Hello world! @ %u sec\n", OS_GetTicks());
-	}
-	return 0;
+    fixup_vtor();
+
+    while (1) {
+        OS_Sleep(10);
+        printf("Hello world! @ %u sec\n", OS_GetTicks());
+    }
+    return 0;
 }

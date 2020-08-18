@@ -45,19 +45,6 @@ extern "C" {
 #endif /* __cpluscplus */
 
 /*****************************************************************************
- Function    : SysTick_Handler
- Description : This function handles SysTick exception, Call LiteOS interface
-               osTickHandler.
- Input       : None
- Output      : None
- Return      : None
- *****************************************************************************/
-void SysTick_Handler(void)
-{
-    osTickHandler();
-}
-
-/*****************************************************************************
 Function   : osTickStart
 Description: Configure Tick Interrupt Start
 Input   : none

@@ -41,8 +41,10 @@
   .global memcpy
 #endif
 
+#ifndef __CONFIG_OS_LITEOS
 .global g_pfnVectors
 .global Default_Handler
+#endif
 
 /* start address for the initialization values of the .data section.
 defined in linker script */
@@ -102,6 +104,8 @@ LoopForever:
   b LoopForever
 .size Reset_Handler, .-Reset_Handler
 
+#ifndef __CONFIG_OS_LITEOS
+
 /**
  * @brief  This is the code that gets called when the processor receives an
  *         unexpected interrupt.  This simply enters an infinite loop, preserving
@@ -155,11 +159,7 @@ g_pfnVectors:
   .word 0
   .word 0
   .word 0
-#ifdef __CONFIG_OS_LITEOS
-  .word Default_Handler                             // -5
-#else
   .word SVC_Handler                                 // -5
-#endif
   .word Default_Handler // DebugMon_Handler
   .word 0
   .word PendSV_Handler
@@ -215,3 +215,4 @@ g_pfnVectors:
   .word 0
   .word 0                                           // 47
 
+#endif
